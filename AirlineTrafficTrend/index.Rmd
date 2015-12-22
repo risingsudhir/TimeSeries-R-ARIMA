@@ -1,0 +1,69 @@
+---
+title       : Airline Traffic Trend
+subtitle    : An insight into Airline traffic to serve customers better
+author      : Sudhir Tiwari
+job         : Software Developer
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [bootstrap, shiny, interactive]   # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Objective
+
+1. Analyse the Airline traffic trend to get an insight of the traffic trend
+
+2. Forecast Airline traffic so that Aitline can plan ahead to serve customers better
+
+3. Help Airlines to optimize their operations when a high or a low traffic is forecasted
+
+--- .class #id 
+
+## Analysis
+
+1. Analysis has been performed on the training set data from the Box & Jenkins airline monthly traffic.
+
+2. Data has been observed for the period 1949 to 1960.
+
+3. Prediction model is based on AutoRegressive Integrated Moving Average (ARIMA) model
+
+--- .class #id 
+
+## Trend and Forecast
+
+Here is the observed trend of the Airline traffic for the period 1949 to 1960, with traffic forecast for 
+next 1 year (1960 - 1961)
+
+
+```{r echo = F, results = 'asis', fig.align = 'center' }
+library(datasets)
+library(stats)
+
+modelFit <- arima(AirPassengers, order = c(1, 0, 0), list(order = c(2,1, 0), period = 12))
+
+fit <- predict(modelFit, n.ahead = 12)
+
+upperBound <- fit$pred + 2 * fit$se
+lowerBound <- fit$pred - 2 * fit$se
+
+
+getwd
+ts.plot(AirPassengers, fit$pred, upperBound, lowerBound,
+        col = c(1, 2, 4, 4), lty = c(1, 1, 2, 2),
+        gpars=list(xlab="Year", ylab="Passengers (in Thousands)"))
+
+legend("topleft", col = c(1, 2, 4), lty = c(1, 1, 2),
+       c("Actual (in Thousands)", "Forecast (in Thousands)", "95% Confidence Interval"))
+```
+
+--- .class #id 
+
+## Web Application for Forecast
+
+1. A web application has been created and deployed <a href="https://sudhir.shinyapps.io/slidyairline">here</a>
+
+2. The web application enables users to select the specific period to find the observed traffic trend.
+
+3. It has option to specify the forecast period. Users can get the forecast upto 5 years from the end of observed period.
