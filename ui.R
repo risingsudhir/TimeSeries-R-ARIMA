@@ -55,11 +55,23 @@ shinyUI(
                                 airline traffic. For example - if observed period is from [1950 to 1955], model will 
                                conider the observed traffic between [1950 to 1955] (both inclusive) and predict the trend/ traffic 
                                from 1955 onwards."),
-                             p("Model needs atleast 5 years of observed data and if selected interval is less than 5 years,
+                             p("Model needs atleast 5 years of observed data. If selected interval is less than 5 years,
                                 it will consider 5 years from the starting year."),
                              
                              h5("Forecast Period"),
-                             p("Number of years model will forecast airline trend/ traffic, starting from end of observed period")
+                             p("Number of years model will forecast airline trend/ traffic, starting from end of observed period"),
+                             
+                             br(),
+                             
+                             h4("Results"),
+                             
+                             p("Results are shown on the right hand panel under two tabs - Trend and Forecast."),
+                             
+                             h5("Trend"),
+                             p("Graphical presentation of the observed and predicted trend of the airline traffic (traffic is shown in Thousands)"),
+                             
+                             h5("Forecast"),
+                             p("Number of passengers forcast per month for the given forecast period.")
                          ))
             ))
         )
